@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Map Editor for jgame.js</title>
+<script type="text/javascript" src="js/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="js/jgame.js"></script>
+<script type="text/javascript" src="js/map.jgame.js"></script>
+<script type="text/javascript">
+window.addEventListener("load", function() {
+	jgmap.game.preload(
+		"_autotile.png",
+		"_autotile2.png",
+		"chip.png"
+	);
+	jgmap.game.loaded.handle(function() {
+		jgmap.scene._addChip(jgmap.game.r("_autotile.png"), true);
+		jgmap.scene._addChip(jgmap.game.r("_autotile2.png"), true);
+		jgmap.scene._addChip(jgmap.game.r("chip.png"));
+		for (var x=0; x<jgmap.config.map.width; x++)
+			for (var y=0; y<jgmap.config.map.height; y++)
+				jgmap.scene.tile.data[x][y] = Math.floor(Math.random() * 4);
+		jgmap.scene.tile.refresh();
+		jgmap.update_map_chips();
+	});
+}, false);
+</script>
+<style>
+#toolbar {
+	float:left;
+	width:200px;
+	height:480px;
+	border:6px solid silver;
+	overflow-y:scroll;
+	overflow-x:hidden;
+}
+.game-container {
+	float:left;
+	border:1px solid black;
+}
+.layer-controller {
+	float:left;
+	height: 480px;
+	padding: 1ex;
+}
+.c {
+	clear:both;
+}
+.chip {
+	float:left;
+	margin:2px;
+}
+.chip:hover, .chip-active {
+	margin:0px;
+	border:2px solid orange;
+}
+#out {
+	float:left;
+}
+#out-box {
+	width:240px;
+	height:160px;
+}
+#setting {
+	float:left;
+}
+.description {
+	margin-bottom:1ex;
+}
+</style>
+</head>
+<body>
+<div class="description">
+	jgame.jsのTileクラス用データを出力するエディタです。<br />
+	左のツールボックスにマップチップ画像をドラッグ＆ドロップして、マップを描いてから、出力ボタンでjavascript用データを生成してください。。<br />
+	現在はファイル名先頭が_であるファイルはオートタイル、それ以外は通常のマップチップとして扱います。<br/>
+	<strong style="color:red">注：このページはデモ用です。<a href="http://www.silversecond.com/WolfRPGEditor/">WOLF RPGエディター</a>さんの素材を使っているため、画像の再利用は控えるようお願いします。</strong>
+</div>
+<div>
+	<div id="toolbar" title="ここにチップ画像をドラッグ＆ドロップしてください。">
+	</div>
+	<div class="game-container"><div id="jgame"></div></div>
+	<div class="layer-controller">
+		レイヤー・・
+	</div>
+	<div class="c"></div>
+</div>
+<div>
+	<div id="out">
+		<div>
+			<input type="button" value="出力" id="outbtn" />
+			<input type="checkbox" value="1" id="out-transpose" />[y][x]形式で出力
+		</div>
+		<div>
+			<textarea id="out-box"></textarea>
+		</div>
+	</div>
+	<div id="setting">
+		<fieldset>
+			<legend>チップ設定</legend>
+			<div>
+				<label for="">width</label>
+				<input type="text" id="tile_width" name="tile_width" value="" />
+			</div>
+			<div>
+				<label for="">height</label>
+				<input type="text" id="tile_height" name="tile_height" value="" />
+			</div>
+		</fieldset>
+		<fieldset>
+			<legend>マップ設定</legend>
+			<div>
+				<label for="">width</label>
+				<input type="text" id="map_width" name="map_width" value="" />
+			</div>
+			<div>
+				<label for="map_height">height</label>
+				<input type="text" id="map_height" name="map_height" value="" />
+			</div>
+		</fieldset>
+	</div>
+	<div class="c"></div>
+</div>
+</body>
+</html>

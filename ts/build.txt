@@ -1,0 +1,6 @@
+../../jgame.js/lib/jgame.d.ts
+jquery.d.ts
+map.ts
+dom.ts
+--out ../js/map.jgame.js
+--declaration
